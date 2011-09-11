@@ -1,0 +1,335 @@
+402
+2,750,000
+Caribbean Sea (OMEGA)
+4
+25-MAY-85
+1985/32
+
+14024
+720,240
+Island of Newfoundland
+5
+01-APR-95
+1995/26
+
+14221
+36,000
+Lac Saint-Pierre to Lavaltrie (St. Lawrence River)
+26
+09-APR-94
+1994/31
+
+37162
+150,000
+Goeree to Texel
+12
+18-MAY-96
+1996/35
+
+37266
+17,494
+Rade and Port de Caen Plans: A. Entrance Channel to Port de Caen
+3
+05-APR-97
+1997/21
+
+37420
+167,000
+INT. 1804, Ile D'Oleron to Bassin D'Arcachon (DECCA)
+1
+27-FEB-88
+1988/20
+
+38581
+30,000
+Arsuk Fjord
+3
+10-SEP-77
+1977/44
+
+38584
+80,000
+Sermersut to Nunarsuit
+2
+16-MAY-81
+1981/28
+
+43103
+50,000
+Store Skoroya to Brynilen
+4
+09-DEC-95
+1996/19
+
+43106
+50,000
+Kvalsundet, Tromsoysundet and Ballsfjorden
+6
+23-MAR-96
+1996/20
+
+43126
+50,000
+Hekkingen to Teistneset
+4
+16-MAR-96
+1996/24
+
+43143
+50,000
+Harstad and Astafjorden to Tjeldsundet
+4
+01-FEB-97
+1997/17
+
+43168
+10,000
+Harbor of Bodo
+2
+19-SEP-98
+1998/52
+
+43301
+50,000
+Sognesjoen to Stavenes
+4
+11-SEP-93
+1994/09
+
+43343
+50,000
+Kvassheim to Kolnesholmene (Norway-West Coast)
+2
+10-OCT-81
+1981/48
+
+43344
+50,000
+Hadyret to Kvassheim (Norway-Southwest Coast)
+3
+16-JUL-83
+1983/36
+
+43386
+10,000
+Horten Harbor
+2
+30-MAY-98
+1998/40
+
+44221
+50,000
+Approaches to Harnosand Svanon-Sando and Sprangsviken
+1
+12-AUG-89
+1989/42
+
+51201
+11,997
+Oued Sebou Panels: A. Entrance to Oued Sebou
+3
+04-MAY-96
+1996/27
+
+71333
+35,000
+Pulau Labuan
+2
+11-JUL-92
+1992/39
+
+73341
+212,680
+Kepulauan Sangir (Celebes Sea) Plans: A. Pulau-Pulau Kawio
+8
+16-AUG-80
+1980/45
+
+76081
+50,000
+Approaches to Picton
+7
+22-SEP-90
+1990/44
+
+82093
+50,000
+Passages Between New Ireland and New Hanover
+3
+30-JUN-90
+1990/38
+
+82201
+125,000
+Saint George's Channel (South Pacific Ocean)
+2
+18-NOV-95
+1996/07
+
+82449
+350,000
+Santa Cruz Islands
+7
+30-OCT-93
+1994/06
+
+82534
+219,260
+Banks Islands
+4
+10-NOV-84
+1985/04
+
+82543
+299,180
+Espiritu Santo
+8
+22-MAR-97
+1997/19
+
+82571
+157,563
+Efate Island
+6
+21-MAR-98
+1998/29
+
+83158
+49,910
+Tabuaeron Atoll
+7
+24-NOV-84
+1985/07
+
+83225
+73,410
+Islands in the South Pacific Ocean A. Henderson Island
+4
+01-APR-41
+1941/18
+
+83567
+75,000
+Nukualofa and Approaches
+3
+07-AUG-93
+1993/47
+
+91151
+25,000
+Aparri Anchorage and Part of Cagayan River
+3
+23-DEC-95
+1996/24
+
+91309
+15,000
+Batangas
+4
+26-MAR-94
+1994/19
+
+91326
+50,000
+Coron Bay, Calamian Group
+2
+29-MAY-76
+1976/35
+
+92090
+100,000
+Ormoc Bay to Maasin
+2
+12-DEC-98
+1999/16
+
+92120
+100,000
+Eastern Approaches to Hinatuan Passage (Northeast Coast of Mindanao)
+3
+05-JAN-91
+1991/12
+
+92160
+110,000
+Yaco Point to Cape San Agustin
+3
+18-NOV-89
+1990/09
+
+92296
+50,000
+Port Ozamiz and Approaches
+3
+20-OCT-90
+1990/51
+
+92350
+100,000
+Iloilo and Guimaras Straits (Philippines)
+4
+09-NOV-96
+1997/04
+
+92380
+100,000
+East Coast of Cebu
+3
+19-SEP-98
+1999/01
+
+92385
+30,000
+Cebu Harbor and Approaches
+4
+28-MAR-92
+1992/42
+
+92470
+200,000
+Cuyo East Pass (LORAN-C)
+3
+21-JUN-86
+1986/37
+
+93045
+250,000
+Heng Jiao to Haima Tan (Routh Shoal) (Seahorse Shoal)
+2
+09-JUN-84
+1984/34
+
+93478
+50,000
+Approaches to Vung Xuan Dai and Vung Qui Nhon (Vietnam)
+4
+15-FEB-97
+1997/16
+
+94187
+24,998
+Oujiang Beikou to Wenzhou
+3
+20-APR-96
+1996/29
+
+94201
+88,160
+Chiushan Liehtao to Hsiangshan Pu
+1
+01-MAY-45
+1945/23
+
+94282
+75,000
+Approaches to Qingdao Gang
+9
+06-JUN-98
+1998/37
+
+94322
+100,000
+Yantai Gang and Approaches
+14
+18-MAY-96
+1996/33
