@@ -9,12 +9,7 @@ var img2_top = 0;
 var img2_left = 0;
 var img2_cx;
 var img2_cy;
-var img1_zoomfactor = 3;
 var img2_zoomfactor = 10;
-var factor = img1_zoomfactor;
-var old_zoom = img1_zoomfactor;
-var img_width = 1500;
-var img_height = 1500;
 var cont_width;
 var cont_height;
 var crop_width;
@@ -1451,7 +1446,7 @@ function validateInputs() {
 					$("select#datum_correction").assert((false), "Corrects Chart Datum to: Please select the correct datum the chart is corrected to.")
 				}
 				if($("select#datum_correction").val() == 'other') {
-					$("input#datum_other").require("'Corrects Chart Datum to' is set to 'other' - please enter the datum the chart is corrected to (required).").nonHtml().minLength(5, "Datum: You need to give more details - at least 5 characters.").maxLength(50, "Datum: Please shorten your input to 50 characters.");
+					$("input#datum_correction_other").require("'Corrects Chart Datum to' is set to 'other' - please enter the datum the chart is corrected to (required).").nonHtml().minLength(5, "Datum: You need to give more details - at least 5 characters.").maxLength(50, "Datum: Please shorten your input to 50 characters.");
 				}
 				$("input#datum_adj_y").require().match("number").greaterThanOrEqualTo(0);
 				$("input#datum_adj_y").assert(($("input#datum_adj_y").val().toString() != '0.0'), "Adjustment north-/southward: If the value is '0', please enter '0'.");

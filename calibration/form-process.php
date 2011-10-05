@@ -31,6 +31,11 @@ if (isset($_POST['chartID'])) //A very stupid check whether we actually should s
 	$result = mysql_query('SELECT * FROM ocpn_nga_charts_with_params WHERE number = "'.$cid.'"');
 	$chart = mysql_fetch_array($result);
 	mysql_free_result($result);
+	if ($chart['prerotate'] == 90 || $chart['prerotate'] == 270) {
+		$hlp = $chart['width'];
+		$chart['width'] = $chart['height'];
+		$chart['height'] = $hlp;
+	}
 	//timestamp
 	$timestamp = time();
 	//find the current KAP
@@ -44,9 +49,20 @@ if (isset($_POST['chartID'])) //A very stupid check whether we actually should s
 	mysql_query('UPDATE ocpn_nga_kap SET active = 0 WHERE kap_id = '.$kap['kap_id']);
 	if(mysql_errno() !== 0) $db_errors .= mysql_errno() . ": " . mysql_error() . "\n";
 	//Insert the new data
-	$query_fmt = 'INSERT INTO ocpn_nga_kap (number, is_main, status_id, locked, scale, title, NU, GD, PR, PP, UN, SD, DTMx, DTMy, DTMdat, changed, changed_by, active, bsb_type, GD_other, PR_other, UN_other, SD_other, DTMdat_other, locked_by, comments, noPP, noDTM)
-		VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, FROM_UNIXTIME(%s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)';
-	
+	$query_fmt = 'INSERT INTO ocpn_nga_kap (number, is_main, status_id, locked, scale, title, NU, GD, PR, PP, UN, SD, DTMx, DTMy, DTMdat, changed, changed_by, active, bsb_type, GD_other, PR_other, UN_other, SD_other, DTMdat_other, locked_by, comments, noPP, noDTM, gpx)
+		VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, FROM_UNIXTIME(%s), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)';
+
+	if ($_FILES['gpx']['size'] > 0)
+	{
+		// get contents of a file into a string
+		$handle = fopen( $_FILES['gpx']['tmp_name'], "r");
+		$gpx_str = '\''.mysql_real_escape_string(fread($handle, $_FILES['gpx']['size'])).'\'';
+		fclose($handle);
+	}
+	else
+	{
+		$gpx_str = 'NULL';
+	}
 	//: Some values are not clear, so we will "invent" them for now
 	//PP is not clear from the data sent from the form
 	$pp_fake_hemi = 'N'; //TODO: will the form be extended or should we "invent" it here from the chart data - not 100% safe to do, but would almost be
@@ -79,12 +95,12 @@ if (isset($_POST['chartID'])) //A very stupid check whether we actually should s
 	else
 		$params['noDTM'] = 'NULL';
 	
-	$query = sprintf($query_fmt, $cid, 1, undef2null($params['status']), 'NULL', $chart['scale'], str2db($chart['title']), str2db($cid), str2db(empty2null($params['datum'])), str2db(empty2null($params['projection'])),$pp , str2db(empty2null($params['soundings'])), str2db(empty2null($params['soundings_datum'])), min2dbl($params['datum_adj_x'], 0, $params['datum_adj_we']), min2dbl($params['datum_adj_y'], 0, $params['datum_adj_ns']), str2db($params['datum_correction'], true), $timestamp, $_SESSION['wp-user']['id'], 1,  str2db('BASE'), str2db($params['datum_other'], true), str2db($params['projection_other'], true), str2db($params['soundings_other'], true), str2db($params['soundings_datum_other'], true), str2db($params['datum_correction_other'], true), 'NULL', str2db($params['comment'], true), $params['noPP'], $params['noDTM']);
+	$query = sprintf($query_fmt, $cid, 1, undef2null($params['status']), 'NULL', $chart['scale'], str2db($chart['title']), str2db($cid), str2db(empty2null($params['datum'])), str2db(empty2null($params['projection'])),$pp , str2db(empty2null($params['soundings'])), str2db(empty2null($params['soundings_datum'])), min2dbl($params['datum_adj_x'], 0, $params['datum_adj_we']), min2dbl($params['datum_adj_y'], 0, $params['datum_adj_ns']), str2db($params['datum_correction'], true), $timestamp, $_SESSION['wp-user']['id'], 1,  str2db('BASE'), str2db($params['datum_other'], true), str2db($params['projection_other'], true), str2db($params['soundings_other'], true), str2db($params['soundings_datum_other'], true), str2db($params['datum_correction_other'], true), 'NULL', str2db($params['comment'], true), $params['noPP'], $params['noDTM'], $gpx_str);
 	mysql_query($query);
 	if(mysql_errno() !== 0) $db_errors .= mysql_errno() . ": " . mysql_error() . "\n";
 	$new_kap_id = mysql_insert_id($link);
-	//Invalidate points
-	mysql_query('UPDATE ocpn_nga_kap_point SET active = 0 WHERE kap_id = '.$kap['kap_id']);
+	//Invalidate REF points
+	mysql_query('UPDATE ocpn_nga_kap_point SET active = 0 WHERE point_type=\'REF\' AND kap_id = '.$kap['kap_id']);
 	if(mysql_errno() !== 0) $db_errors .= mysql_errno() . ": " . mysql_error() . "\n";
 	//Insert new points
 	$query_fmt = 'INSERT INTO ocpn_nga_kap_point (kap_id, latitude, longitude, x, y, point_type, created_by, created, sequence, active) VALUES (%s, %s, %s, %s, %s, %s, %s, FROM_UNIXTIME(%s), %s, %s)';

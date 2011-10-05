@@ -83,15 +83,17 @@ $initResetComment = '<input type="button" disabled="disabled" class="reset_but_c
     <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.14.custom.css" rel="stylesheet" />
     <link type="text/css" href="css/cal_default.css" rel="stylesheet" />
 	<link type="text/css" href="css/jquery.validity.css" rel="stylesheet" />
-    <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
-	<script type="text/javascript" src="js/json2.min.js"></script>
-	<script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
-	<script type="text/javascript" src="js/jquery.scrollTo-1.4.2-min.js"></script>
-	<script type="text/javascript" src="js/jquery.validity.pack.js"></script>
-	<script type="text/javascript" src="js/jquery.cookie.js"></script>
-	<script type="text/javascript" src="js/jquery.bt.min.js"></script>
-	<script type="text/javascript" src="js/calibrating-functions.js"></script>
+	<style type="text/css">
+    img#img2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: <?php echo $chart['cornersize'] * 10; ?>px;
+    width: <?php echo $chart['cornersize'] * 10; ?>px;
+    z-index: 1;
+	-webkit-user-drag: none;
+	}
+	</style>
 	<script type="text/javascript">
 		<?php print "var lastEdit = $changed;\n"; ?>
 		var id = <?php print $chart_id; ?>;
@@ -99,6 +101,12 @@ $initResetComment = '<input type="button" disabled="disabled" class="reset_but_c
 		chart['id'] = id;
 		
 <?php
+// If needed, swap width and height for charts rotated 90/270 degrees
+if ($chart['prerotate'] == 90 || $chart['prerotate'] == 270) {
+	$hlp = $chart['width'];
+	$chart['width'] = $chart['height'];
+	$chart['height'] = $hlp;
+}
 // ### Define the JS variables
 foreach($chart as $k => $v) {
 	if(is_string($k)) {
@@ -128,11 +136,26 @@ foreach($chart as $k => $v) {
 		}
 	}
 }
+print "\t\tvar img_width = ".$chart['cornersize'].";\n";
+print "\t\tvar img_height = ".$chart['cornersize'].";\n";
+$zf = (int)($chart['cornersize'] / 500);
+print "\t\tvar img1_zoomfactor = ".$zf.";\n";
 ?>
+		var factor = img1_zoomfactor;
+		var old_zoom = img1_zoomfactor;
 		var chart_width = chart['width'];
 		var chart_height = chart['height'];
 		var corner_src = corner_base + id + "/" + id + "_" + corner + ".png";
 	</script>
+        <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.14.custom.min.js"></script>
+	<script type="text/javascript" src="js/json2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
+	<script type="text/javascript" src="js/jquery.scrollTo-1.4.2-min.js"></script>
+	<script type="text/javascript" src="js/jquery.validity.pack.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/jquery.bt.min.js"></script>
+	<script type="text/javascript" src="js/calibrating-functions.js"></script>
 </head>
 
 <body onunload="deleteSession();">
@@ -478,7 +501,7 @@ foreach($chart as $k => $v) {
 										<input type="text" class="digit2" value="<?php if(isset($chart['Smin'])) print $chart['Smin']; ?>" name="lat_min_sw" id="lat_min_sw" title="Value for SW corner latitude minutes" size="2" maxlength="2" /><sup>'</sup>
 									</td>
 									<td>
-										<input type="text" class="digit2" value="<?php if(isset($chart['Ssec'])) print $chart['Ssec']; ?>" name="lat_sec_sw" id="lat_sec_sw" title="Value for SW corner latitude seconds" size="2" maxlength="4" /><sup>"</sup>
+										<input type="text" class="digit2" value="<?php if(isset($chart['Ssec'])) print $chart['Ssec']; ?>" name="lat_sec_sw" id="lat_sec_sw" title="Value for SW corner latitude seconds" size="2" maxlength="5" /><sup>"</sup>
 									</td>
 									<td>
 										<select class="" name="lat_ns_sw" id="lat_ns_sw" size="1">
@@ -499,7 +522,7 @@ foreach($chart as $k => $v) {
 										<input type="text" class="digit2" value="<?php if(isset($chart['Wmin'])) print $chart['Wmin']; ?>" name="lng_min_sw" id="lng_min_sw" title="Value for SW corner longitude minutes" size="2" maxlength="2" /><sup>'</sup>
 									</td>
 									<td>
-										<input type="text" class="digit2" value="<?php if(isset($chart['Wsec'])) print $chart['Wsec']; ?>" name="lng_sec_sw" id="lng_sec_sw" title="Value for SW corner longitude seconds" size="2" maxlength="4" /><sup>"</sup>
+										<input type="text" class="digit2" value="<?php if(isset($chart['Wsec'])) print $chart['Wsec']; ?>" name="lng_sec_sw" id="lng_sec_sw" title="Value for SW corner longitude seconds" size="2" maxlength="5" /><sup>"</sup>
 									</td>
 									<td>
 										<select name="lng_we_sw" id="lng_we_sw" size="1">
@@ -532,7 +555,7 @@ foreach($chart as $k => $v) {
 										<input type="text" class="digit2" value="<?php if(isset($chart['Nmin'])) print $chart['Nmin']; ?>" name="lat_min_ne" id="lat_min_ne" title="Value for NE corner latitude minutes" size="2" maxlength="2" /><sup>'</sup>
 									</td>
 									<td>
-										<input type="text" class="digit2" value="<?php if(isset($chart['Nsec'])) print $chart['Nsec']; ?>" name="lat_sec_ne" id="lat_sec_ne" title="Value for NE corner latitude seconds" size="2" maxlength="4" /><sup>"</sup>
+										<input type="text" class="digit2" value="<?php if(isset($chart['Nsec'])) print $chart['Nsec']; ?>" name="lat_sec_ne" id="lat_sec_ne" title="Value for NE corner latitude seconds" size="2" maxlength="5" /><sup>"</sup>
 									</td>
 									<td>
 										<select name="lat_ns_ne" id="lat_ns_ne" size="1">
@@ -553,7 +576,7 @@ foreach($chart as $k => $v) {
 										<input type="text" class="digit2" value="<?php if(isset($chart['Emin'])) print $chart['Emin']; ?>" name="lng_min_ne" id="lng_min_ne" title="Value for NE corner longitude minutes" size="2" maxlength="2" /><sup>'</sup>
 									</td>
 									<td>
-										<input type="text" class="digit2" value="<?php if(isset($chart['Esec'])) print $chart['Esec']; ?>" name="lng_sec_ne" id="lng_sec_ne" title="Value for NE corner longitude seconds" size="2" maxlength="4" /><sup>"</sup>
+										<input type="text" class="digit2" value="<?php if(isset($chart['Esec'])) print $chart['Esec']; ?>" name="lng_sec_ne" id="lng_sec_ne" title="Value for NE corner longitude seconds" size="2" maxlength="5" /><sup>"</sup>
 									</td>
 									<td>
 										<select name="lng_we_ne" id="lng_we_ne" size="1">
@@ -672,9 +695,9 @@ foreach($chart as $k => $v) {
 				<div id="control_wrapper">
 					<div id="control_1">
 						Scale<br />
-						<input type="button" value="1:3" onClick="factor=3; changeimg1Zoom();" disabled="disabled" />
-						<input type="button" value="1:2" onClick="factor=2; changeimg1Zoom();" />
-						<input type="button" value="1:1" onClick="factor=1; changeimg1Zoom();" />
+						<input type="button" value="1:<?php echo $zf; ?>" onClick="factor=<?php echo $zf; ?>; changeimg1Zoom();" disabled="disabled" />
+						<input type="button" value="1:<?php echo $zf-1; ?>" onClick="factor=<?php echo $zf-1; ?>; changeimg1Zoom();" />
+						<input type="button" value="1:<?php echo $zf-2; ?>" onClick="factor=<?php echo $zf-2; ?>; changeimg1Zoom();" />
 					</div>
 					
 					<div id="control_2">
