@@ -72,11 +72,19 @@
 								if($v['status_id'] != 14) {
 									print '<tr>
 											<td colspan="3"><a id="edit_'.$k.'" class="cal_a" onclick="editChartData(this.id)" href="'.$PHP_SELF.'#'.$k.'">Click here to enter and/ or update the needed chart infos for producing the KAP file.</a></td>
-										</tr>';
+											</tr>';
+									if($v['status_id'] != 15) {
+										print '<tr>
+												<td colspan="3"><a onClick="w = window.open(\'http://opencpn.xtr.cz/nga-charts/gpxply.php?chart='.$k.'\', \'PLY_submission\', \'width=400,height=100,menubar=no,resizable=no,scrollbars=no,status=no\'); w.focus();" class="cal_a" onclick="editChartData(this.id)" href="#">Click here to submit the chart polygon as GPX.</a></td>
+											</tr>';
+									}
 								}
 								if($v['kap_generated']) {
 									print '<tr>
 											<td colspan="3"><a href="http://opencpn.xtr.cz/nga-kaps/'.$k.'.kap">Click here to download the KAP file.</a> ('.$v['kap_generated'].')</td>
+										</tr>';
+									print '<tr>
+											<td colspan="3"><a href="http://opencpn.xtr.cz/nga-kaps/'.$k.'.gpx">Click here to download the GPX file with chart extents.</a> ('.$v['kap_generated'].')</td>
 										</tr>';
 								}
 							}
