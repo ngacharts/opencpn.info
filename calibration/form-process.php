@@ -15,7 +15,7 @@ else {
 }
 
 // ### Connect to the DB
-$link = mysql_connect('localhost', 'gunther', 'password');
+$link = mysql_connect('localhost', 'gunther', 'tatJana2603');
 if (!$link) {
     die('Connection failed: ' . mysql_error());
 }

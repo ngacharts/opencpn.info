@@ -23,10 +23,10 @@
 	<p style="margin-bottom: 10px;"><strong>Last updated: 2011-07-29 14:30 UTC</strong></p>
 	<p style="margin-bottom: 10px;"><strong>Please also have a look at eventually existing <a href="#comments">comments at the bottom of the page</a> to avoid duplicated work.</strong></p>
 	<?php
-        global $charts, $count, $miss;
-        $present = $count - $miss;
+        global $charts, $count, $miss, $numpages, $page, $total;
+        $present = $total - $miss;
     ?>
-    <h4>Full-size chart images: <?php print $present .' / '. $count; ?></h4>
+    <h4>Full-size chart images: <?php print $present .' / '. $total; ?></h4>
     <h4>The following chart images are missing:</h4>
 	<ul>							
 	<?php 
@@ -40,6 +40,14 @@
 	
 	<h4>The following charts must still be completed:</h4>
 	<p>By having a look at the already available parts you'll see which are missing.</p>
+<?php 
+echo 'Page:&nbsp;';
+for ($i = 1; $i <= $numpages; $i++)
+	if ($i == $page)
+		echo ('<b>'.$i.'</b>&nbsp;');
+	else
+		echo ('<a href=?page='.$i.'>'.$i.'</a>&nbsp;');
+?>
 	<table class="nga_chart">							
 	<?php 
 		#print_r($charts);
@@ -87,6 +95,39 @@
 											<td colspan="3"><a href="http://opencpn.xtr.cz/nga-kaps/'.$k.'.gpx">Click here to download the GPX file with chart extents.</a> ('.$v['kap_generated'].')</td>
 										</tr>';
 								}
+								if(is_user_logged_in())//if($_SESSION['wp-user']['id'] == 26)
+								{
+									print '<tr><td colspan="3">';
+									$result = $wpdb->get_results("SELECT COUNT(*) AS cnt FROM ocpn_nga_kap WHERE bsb_type != 'BASE' AND active = 1 AND number = $k", ARRAY_A);
+
+									if ($result)
+										$total = (int)$result[0]['cnt'];
+									if ($total > 0)
+									{
+										$result = $wpdb->get_results("SELECT * FROM ocpn_nga_kap WHERE bsb_type != 'BASE' AND active = 1 AND number = $k ORDER BY NU", ARRAY_A);
+										print 'Insets/panels: <a href="#'.$k.'" onclick="editChartInsets('.$k.')">Click here to modify.</a>';
+										print '<table>';
+										print '<tr><th>Title</th><th>ID</th><th>Type</th><th>Scale</th><th>Shape</th><th>Calibrate</th><th>KAP</th><th>PLY</th></tr>';
+										foreach($result as $ck => $cv)
+										{
+											$id = substr($cv['NU'], -1);
+											if(is_numeric($id) || !$id)
+												$id = '';
+											if ($cv['cropped'])
+												$shape = 'OK';
+											else 
+												$shape = 'TBD';
+											print '<tr><td>'.$cv['title'].'</td><td>'.$id.'</td><td>'.$cv['bsb_type'].'</td><td>1:'.$cv['scale'].'</td><td>'.$shape.'</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>';
+										}
+										print '</tr>';
+										print '</table>';
+									}
+									else
+									{
+										print 'No insets defined. If there should be some, <a href="#'.$k.'" onclick="editChartInsets('.$k.')">click here to define them.</a>';
+									}
+									print '</td></tr>';
+								}
 							}
 					print '</table>
 					</td>
@@ -95,7 +136,14 @@
 		}
 	?>
 	</table>
-	
+<?php 
+echo 'Page:&nbsp;';
+for ($i = 1; $i <= $numpages; $i++)
+	if ($i == $page)
+		echo ($i.'&nbsp;');
+	else
+		echo ('<a href=?page='.$i.'>'.$i.'</a>&nbsp;');
+?>	
 
   </div>
 

@@ -45,4 +45,11 @@ function editChartData(link) {
 	}
 }
 
+function editChartInsets(link) {
+	var number = link.toString();
+	var url = "http://opencpn.info/nga/insets.php?chart=";
+	insetsWindow = window.open(url.concat(number), "insetsWindow");
+	insetsWindow.focus();
+}
+
 /* ]]> */
